@@ -13,7 +13,7 @@ public class ModSetup {
 
 		@Override
 		public ItemStack createIcon() {
-			return new ItemStack(Items.BARRIER);
+			return new ItemStack(Registration.WIRELESS_LINK_ITEM.get());
 		}
 
 	};
