@@ -1,6 +1,5 @@
 package withoutaname.mods.withoutaredstone.network;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -42,7 +41,7 @@ public class WirelessLinkModifyPacket {
 	public boolean handle(@Nonnull Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-				Minecraft.getInstance().displayGuiScreen(new WirelessLinkModifyScreen(frequency, receiver));
+				WirelessLinkModifyScreen.open(frequency, receiver);
 			} else {
 				ServerPlayerEntity sender = ctx.get().getSender();
 				WirelessLinkTile tile = openGUIs.remove(sender);

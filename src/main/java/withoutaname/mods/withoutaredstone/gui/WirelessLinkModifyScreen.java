@@ -2,6 +2,7 @@ package withoutaname.mods.withoutaredstone.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
@@ -36,6 +37,10 @@ public class WirelessLinkModifyScreen extends Screen {
 		super(new TranslationTextComponent("screen.withoutaredstone.wireless_link_modify"));
 		this.frequency = frequency;
 		this.receiver = receiver;
+	}
+
+	public static void open(int frequency, boolean receiver) {
+		Minecraft.getInstance().displayGuiScreen(new WirelessLinkModifyScreen(frequency, receiver));
 	}
 
 	@Override
