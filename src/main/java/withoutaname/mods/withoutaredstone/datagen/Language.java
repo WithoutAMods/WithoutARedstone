@@ -5,6 +5,9 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.data.LanguageProvider;
 import withoutaname.mods.withoutaredstone.WithoutARedstone;
+import withoutaname.mods.withoutaredstone.setup.Registration;
+
+import javax.annotation.Nonnull;
 
 public class Language extends LanguageProvider {
 
@@ -17,10 +20,14 @@ public class Language extends LanguageProvider {
 
 	@Override
 	protected void addTranslations() {
-		add("itemGroup.emptymod", "EmptyMod", "EmptyMod");
+		add(Registration.WIRELESS_LINK_BLOCK.get(), "Wireless Link", "Wireless Link");
+
+		add("screen.withoutaredstone.wireless_link_modify", "Wireless Link", "Wireless Link");
+
+		add("itemGroup.withoutaredstone", "WithoutARedstone", "WithoutARedstone");
 	}
 
-	private void add(String key, String de_de, String en_us) {
+	private void add(@Nonnull String key, @Nonnull String de_de, @Nonnull String en_us) {
 		switch(locale) {
 			case "de_de":
 				add(key, de_de);
@@ -31,11 +38,11 @@ public class Language extends LanguageProvider {
 		}
 	}
 
-	private void add(Item key, String de_de, String en_us) {
+	private void add(@Nonnull Item key, @Nonnull String de_de, @Nonnull String en_us) {
 		add(key.getTranslationKey(), de_de, en_us);
 	}
 
-	private void add(Block key, String de_de, String en_us) {
+	private void add(@Nonnull Block key, @Nonnull String de_de, @Nonnull String en_us) {
 		add(key.getTranslationKey(), de_de, en_us);
 	}
 
