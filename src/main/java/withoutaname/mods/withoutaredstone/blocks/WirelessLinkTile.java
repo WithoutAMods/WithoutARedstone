@@ -78,6 +78,7 @@ public class WirelessLinkTile extends TileEntity {
 							if (frequencyPowers.containsKey(frequency)) {
 								frequencyPowers.get(frequency).remove(pos);
 							}
+							iFrequencyPowers.notifyReceivers(frequency);
 							iFrequencyPowers.addReceiver(frequency, this);
 						});
 				updateReceiver();
@@ -107,10 +108,14 @@ public class WirelessLinkTile extends TileEntity {
 	}
 
 	private int getPower() {
-		return Math.max(Math.max(
+		int power = Math.max(Math.max(
 				Math.max(getPowerOnSide(Direction.NORTH), getPowerOnSide(Direction.SOUTH)),
 				Math.max(getPowerOnSide(Direction.EAST), getPowerOnSide(Direction.WEST))),
 				Math.max(getPowerOnSide(Direction.UP), getPowerOnSide(Direction.DOWN)));
+		if (world != null) {
+			world.setBlockState(pos, getBlockState().with(WirelessLinkBlock.POWER, power));
+		}
+		return power;
 	}
 
 	private int getPowerOnSide(Direction side) {

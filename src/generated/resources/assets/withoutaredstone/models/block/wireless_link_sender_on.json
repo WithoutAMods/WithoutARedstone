@@ -1,0 +1,7 @@
+{
+  "parent": "withoutaredstone:block/wireless_link",
+  "textures": {
+    "top": "withoutaredstone:block/wireless_link_on",
+    "torch": "minecraft:block/redstone_torch"
+  }
+}

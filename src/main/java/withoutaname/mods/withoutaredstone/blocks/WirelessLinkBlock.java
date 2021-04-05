@@ -1,6 +1,7 @@
 package withoutaname.mods.withoutaredstone.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,6 +17,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -102,6 +105,12 @@ public class WirelessLinkBlock extends Block {
 	@Override
 	protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(POWER, RECEIVER);
+	}
+
+	@Nonnull
+	@Override
+	public VoxelShape getShape(@Nonnull BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
+		return Block.makeCuboidShape(0, 0, 0, 16, 2, 16);
 	}
 
 	@Override

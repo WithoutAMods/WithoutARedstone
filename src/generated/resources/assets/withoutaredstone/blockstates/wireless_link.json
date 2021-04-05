@@ -1,0 +1,100 @@
+{
+  "variants": {
+    "power=0,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_off"
+    },
+    "power=1,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=2,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=3,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=4,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=5,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=6,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=7,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=8,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=9,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=10,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=11,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=12,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=13,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=14,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=15,receiver=false": {
+      "model": "withoutaredstone:block/wireless_link_sender_on"
+    },
+    "power=0,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_off"
+    },
+    "power=1,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=2,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=3,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=4,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=5,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=6,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=7,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=8,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=9,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=10,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=11,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=12,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=13,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=14,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    },
+    "power=15,receiver=true": {
+      "model": "withoutaredstone:block/wireless_link_receiver_on"
+    }
+  }
+}
