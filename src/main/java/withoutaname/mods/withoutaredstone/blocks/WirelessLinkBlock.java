@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -15,11 +16,11 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import withoutaname.mods.withoutaredstone.network.Networking;
+import withoutaname.mods.withoutaredstone.network.WirelessLinkModifyPacket;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -52,7 +53,7 @@ public class WirelessLinkBlock extends Block {
 
 	@Override
 	public void neighborChanged(BlockState state, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull Block blockIn, @Nonnull BlockPos fromPos, boolean isMoving) {
-		if (!state.get(RECEIVER)) {
+		if (!worldIn.isRemote && !state.get(RECEIVER)) {
 			TileEntity te = worldIn.getTileEntity(pos);
 			if (te instanceof WirelessLinkTile) {
 				((WirelessLinkTile) te).updateSender();
@@ -78,7 +79,8 @@ public class WirelessLinkBlock extends Block {
 		if (!worldIn.isRemote) {
 			TileEntity te = worldIn.getTileEntity(pos);
 			if (te instanceof WirelessLinkTile) {
-				((WirelessLinkTile) te).setReceiver(!state.get(RECEIVER));
+				ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+				Networking.sendToClient(new WirelessLinkModifyPacket(serverPlayer, ((WirelessLinkTile) te)), serverPlayer);
 			} else {
 				return ActionResultType.FAIL;
 			}

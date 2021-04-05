@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import withoutaname.mods.withoutaredstone.WithoutARedstone;
 import withoutaname.mods.withoutaredstone.data.CapabilityFrequencyPowers;
+import withoutaname.mods.withoutaredstone.network.Networking;
 
 public class ModSetup {
 
@@ -19,6 +20,8 @@ public class ModSetup {
 	};
 
 	public static void init(FMLCommonSetupEvent event) {
+		Networking.registerMessages();
+
 		CapabilityFrequencyPowers.register();
 	}
 

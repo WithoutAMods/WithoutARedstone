@@ -27,18 +27,43 @@ public class WirelessLinkTile extends TileEntity {
 	public WirelessLinkTile(boolean receiver) {
 		this();
 		this.receiver = receiver;
+		markDirty();
+	}
+
+	public int getFrequency() {
+		return frequency;
 	}
 
 	public void setFrequency(int frequency) {
-		int oldFrequency = this.frequency;
-		this.frequency = frequency;
 		assert world != null;
-		if (!world.isRemote && receiver && world.isBlockLoaded(pos)) {
-			world.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
-					.ifPresent(iFrequencyPowers -> iFrequencyPowers.removeReceiver(oldFrequency, this));
-			world.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
-					.ifPresent(iFrequencyPowers -> iFrequencyPowers.addReceiver(frequency, this));
+		if (!world.isRemote) {
+			int oldFrequency = this.frequency;
+			this.frequency = frequency;
+			if (receiver) {
+				if (world.isBlockLoaded(pos)) {
+					world.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
+							.ifPresent(iFrequencyPowers -> iFrequencyPowers.removeReceiver(oldFrequency, this));
+					world.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
+							.ifPresent(iFrequencyPowers -> iFrequencyPowers.addReceiver(frequency, this));
+					updateReceiver();
+				}
+			} else {
+				world.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
+						.ifPresent(iFrequencyPowers -> {
+							HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers = iFrequencyPowers.getFrequencyPowers();
+							if (frequencyPowers.containsKey(oldFrequency)) {
+								frequencyPowers.get(oldFrequency).remove(pos);
+								iFrequencyPowers.notifyReceivers(oldFrequency);
+							}
+							updateSender();
+						});
+			}
+			markDirty();
 		}
+	}
+
+	public boolean isReceiver() {
+		return receiver;
 	}
 
 	public void setReceiver(boolean receiver) {
@@ -61,6 +86,7 @@ public class WirelessLinkTile extends TileEntity {
 						.ifPresent(iFrequencyPowers -> iFrequencyPowers.removeReceiver(frequency, this));
 				updateSender();
 			}
+			markDirty();
 		}
 	}
 
@@ -122,11 +148,6 @@ public class WirelessLinkTile extends TileEntity {
 			world.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
 					.ifPresent(iFrequencyPowers -> iFrequencyPowers.removeReceiver(frequency, this));
 		}
-	}
-
-	@Override
-	public void remove() {
-		super.remove();
 	}
 
 	public void blockDestroyed() {

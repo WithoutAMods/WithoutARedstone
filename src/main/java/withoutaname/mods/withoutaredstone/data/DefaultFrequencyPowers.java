@@ -57,8 +57,10 @@ public class DefaultFrequencyPowers implements IFrequencyPowers {
 
 	@Override
 	public void notifyReceivers(int frequency) {
-		for (WirelessLinkTile tile : receivers.get(frequency)) {
-			tile.updateReceiver();
+		if (receivers.containsKey(frequency)) {
+			for (WirelessLinkTile tile : receivers.get(frequency)) {
+				tile.updateReceiver();
+			}
 		}
 	}
 
