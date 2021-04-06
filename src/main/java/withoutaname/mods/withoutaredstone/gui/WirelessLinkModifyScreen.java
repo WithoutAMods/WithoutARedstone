@@ -9,6 +9,7 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import withoutaname.mods.withoutaredstone.WithoutARedstone;
 import withoutaname.mods.withoutaredstone.network.Networking;
 import withoutaname.mods.withoutaredstone.network.WirelessLinkModifyPacket;
 
@@ -17,10 +18,10 @@ import java.util.regex.Pattern;
 
 public class WirelessLinkModifyScreen extends Screen {
 
-	protected final ResourceLocation GUI_TEXTURE = new ResourceLocation("textures/gui/demo_background.png");
+	protected final ResourceLocation GUI_TEXTURE = new ResourceLocation(WithoutARedstone.MODID, "textures/gui/wireless_link_modify.png");
 
-	private final int xSize = 248;
-	private final int ySize = 166;
+	private final int xSize = 228;
+	private final int ySize = 68;
 	private int guiLeft;
 	private int guiTop;
 
