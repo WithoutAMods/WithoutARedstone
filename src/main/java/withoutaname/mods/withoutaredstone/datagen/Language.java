@@ -39,11 +39,11 @@ public class Language extends LanguageProvider {
 	}
 
 	private void add(@Nonnull Item key, @Nonnull String de_de, @Nonnull String en_us) {
-		add(key.getTranslationKey(), de_de, en_us);
+		add(key.getDescriptionId(), de_de, en_us);
 	}
 
 	private void add(@Nonnull Block key, @Nonnull String de_de, @Nonnull String en_us) {
-		add(key.getTranslationKey(), de_de, en_us);
+		add(key.getDescriptionId(), de_de, en_us);
 	}
 
 }

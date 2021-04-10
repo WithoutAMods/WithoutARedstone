@@ -41,7 +41,7 @@ public class WirelessLinkModifyScreen extends Screen {
 	}
 
 	public static void open(int frequency, boolean receiver) {
-		Minecraft.getInstance().displayGuiScreen(new WirelessLinkModifyScreen(frequency, receiver));
+		Minecraft.getInstance().setScreen(new WirelessLinkModifyScreen(frequency, receiver));
 	}
 
 	@Override
@@ -59,17 +59,17 @@ public class WirelessLinkModifyScreen extends Screen {
 				new StringTextComponent("Sender"), button -> setReceiver(false)));
 		setReceiver(receiver);
 
-		frequencyTextField = addButton(new TextFieldWidget(minecraft.fontRenderer, i, j + 24, 204, 20, StringTextComponent.EMPTY));
+		frequencyTextField = addButton(new TextFieldWidget(minecraft.font, i, j + 24, 204, 20, StringTextComponent.EMPTY));
 		frequencyTextField.setResponder(s -> {
 			if ("".equals(s) || "-".equals(s)) {
 				frequency = 0;
 			} else if (numeric.matcher(s).matches()) {
 				frequency = Integer.parseInt(s);
 			} else {
-				frequencyTextField.setText(String.valueOf(frequency));
+				frequencyTextField.setValue(String.valueOf(frequency));
 			}
 		});
-		frequencyTextField.setText(String.valueOf(frequency));
+		frequencyTextField.setValue(String.valueOf(frequency));
 	}
 
 	private void setReceiver(boolean receiver) {
@@ -88,7 +88,7 @@ public class WirelessLinkModifyScreen extends Screen {
 	protected void drawGuiBackgroundLayer(MatrixStack matrixStack) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		assert this.minecraft != null;
-		this.minecraft.getTextureManager().bindTexture(GUI_TEXTURE);
+		this.minecraft.getTextureManager().bind(GUI_TEXTURE);
 		int i = this.guiLeft;
 		int j = this.guiTop;
 		this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
@@ -100,7 +100,7 @@ public class WirelessLinkModifyScreen extends Screen {
 	}
 
 	@Override
-	public void onClose() {
+	public void removed() {
 		Networking.sendToServer(new WirelessLinkModifyPacket(frequency, receiver));
 	}
 }

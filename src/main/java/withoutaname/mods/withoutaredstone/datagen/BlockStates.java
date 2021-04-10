@@ -60,13 +60,13 @@ public class BlockStates extends BlockStateProvider {
 				.texture("torch", mcLoc("block/redstone_torch"));
 
 		getVariantBuilder(Registration.WIRELESS_LINK_BLOCK.get()).forAllStates(blockState -> {
-			if (blockState.get(WirelessLinkBlock.RECEIVER)) {
+			if (blockState.getValue(WirelessLinkBlock.RECEIVER)) {
 				return ConfiguredModel.builder()
-						.modelFile(blockState.get(WirelessLinkBlock.POWER) == 0 ? wirelessLinkReceiverOff : wirelessLinkReceiverOn)
+						.modelFile(blockState.getValue(WirelessLinkBlock.POWER) == 0 ? wirelessLinkReceiverOff : wirelessLinkReceiverOn)
 						.build();
 			} else {
 				return ConfiguredModel.builder()
-						.modelFile(blockState.get(WirelessLinkBlock.POWER) == 0 ? wirelessLinkSenderOff : wirelessLinkSenderOn)
+						.modelFile(blockState.getValue(WirelessLinkBlock.POWER) == 0 ? wirelessLinkSenderOff : wirelessLinkSenderOn)
 						.build();
 			}
 		});

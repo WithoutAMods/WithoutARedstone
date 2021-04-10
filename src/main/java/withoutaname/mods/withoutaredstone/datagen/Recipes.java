@@ -18,16 +18,16 @@ public class Recipes extends RecipeProvider{
 	}
 
 	@Override
-	protected void registerRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
-		ShapedRecipeBuilder.shapedRecipe(Registration.WIRELESS_LINK_ITEM.get())
-				.patternLine("RTR")
-				.patternLine("SIS")
-				.key('R', Items.REDSTONE)
-				.key('T', Items.REDSTONE_TORCH)
-				.key('S', Items.STONE)
-				.key('I', Items.IRON_INGOT)
-				.addCriterion("redstone", InventoryChangeTrigger.Instance.forItems(Items.REDSTONE))
-				.build(consumer);
+	protected void buildShapelessRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
+		ShapedRecipeBuilder.shaped(Registration.WIRELESS_LINK_ITEM.get())
+				.pattern("RTR")
+				.pattern("SIS")
+				.define('R', Items.REDSTONE)
+				.define('T', Items.REDSTONE_TORCH)
+				.define('S', Items.STONE)
+				.define('I', Items.IRON_INGOT)
+				.unlockedBy("redstone", InventoryChangeTrigger.Instance.hasItems(Items.REDSTONE))
+				.save(consumer);
 	}
 
 }

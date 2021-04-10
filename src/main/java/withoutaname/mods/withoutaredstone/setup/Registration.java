@@ -27,5 +27,5 @@ public class Registration {
 
 	public static final RegistryObject<WirelessLinkBlock> WIRELESS_LINK_BLOCK = BLOCKS.register("wireless_link", WirelessLinkBlock::new);
 	public static final RegistryObject<BlockItem> WIRELESS_LINK_ITEM = ITEMS.register("wireless_link", () -> new BlockItem(WIRELESS_LINK_BLOCK.get(), ModSetup.defaultItemProperties));
-	public static final RegistryObject<TileEntityType<WirelessLinkTile>> WIRELESS_LINK_TILE = TILES.register("wireless_link", () -> TileEntityType.Builder.create(WirelessLinkTile::new, WIRELESS_LINK_BLOCK.get()).build(null));
+	public static final RegistryObject<TileEntityType<WirelessLinkTile>> WIRELESS_LINK_TILE = TILES.register("wireless_link", () -> TileEntityType.Builder.of(WirelessLinkTile::new, WIRELESS_LINK_BLOCK.get()).build(null));
 }
