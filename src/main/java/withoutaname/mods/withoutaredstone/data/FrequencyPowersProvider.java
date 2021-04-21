@@ -1,14 +1,14 @@
 package withoutaname.mods.withoutaredstone.data;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class FrequencyPowersProvider implements ICapabilitySerializable<INBT> {
 
@@ -22,7 +22,10 @@ public class FrequencyPowersProvider implements ICapabilitySerializable<INBT> {
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-		return frequencyPowersOptional.cast();
+		if (cap == CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY) {
+			return frequencyPowersOptional.cast();
+		}
+		return LazyOptional.empty();
 	}
 
 	@Override
