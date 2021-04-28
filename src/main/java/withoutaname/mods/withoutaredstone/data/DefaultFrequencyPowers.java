@@ -1,32 +1,32 @@
 package withoutaname.mods.withoutaredstone.data;
 
-import net.minecraft.util.math.BlockPos;
-import withoutaname.mods.withoutaredstone.blocks.WirelessLinkTile;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.minecraft.util.math.BlockPos;
+
+import withoutaname.mods.withoutaredstone.blocks.WirelessLinkTile;
+
 public class DefaultFrequencyPowers implements IFrequencyPowers {
-
-	private HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers = new HashMap<>();
-
+	
 	private final HashMap<Integer, List<WirelessLinkTile>> receivers = new HashMap<>();
-
+	private HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers = new HashMap<>();
+	
 	@Override
 	public HashMap<Integer, HashMap<BlockPos, Integer>> getFrequencyPowers() {
 		return frequencyPowers;
 	}
-
+	
 	@Override
 	public void setFrequencyPowers(HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers) {
 		this.frequencyPowers = frequencyPowers;
 	}
-
+	
 	@Override
 	public int getPower(int frequency) {
 		int power = 0;
-		if (frequencyPowers.containsKey(frequency)){
+		if (frequencyPowers.containsKey(frequency)) {
 			for (int value : frequencyPowers.get(frequency).values()) {
 				if (power < value) {
 					power = value;
@@ -35,14 +35,14 @@ public class DefaultFrequencyPowers implements IFrequencyPowers {
 		}
 		return power;
 	}
-
+	
 	@Override
 	public void removePower(int frequency, BlockPos pos) {
 		if (frequencyPowers.containsKey(frequency)) {
 			frequencyPowers.get(frequency).remove(pos);
 		}
 	}
-
+	
 	@Override
 	public void setPower(int frequency, BlockPos pos, int power) {
 		int oldPower = getPower(frequency);
@@ -54,7 +54,7 @@ public class DefaultFrequencyPowers implements IFrequencyPowers {
 			notifyReceivers(frequency);
 		}
 	}
-
+	
 	@Override
 	public void notifyReceivers(int frequency) {
 		if (receivers.containsKey(frequency)) {
@@ -63,7 +63,7 @@ public class DefaultFrequencyPowers implements IFrequencyPowers {
 			}
 		}
 	}
-
+	
 	@Override
 	public void addReceiver(int frequency, WirelessLinkTile tile) {
 		if (!receivers.containsKey(frequency)) {
@@ -74,11 +74,12 @@ public class DefaultFrequencyPowers implements IFrequencyPowers {
 			wirelessLinkTiles.add(tile);
 		}
 	}
-
+	
 	@Override
 	public void removeReceiver(int frequency, WirelessLinkTile tile) {
 		if (receivers.containsKey(frequency)) {
 			receivers.get(frequency).remove(tile);
 		}
 	}
+	
 }

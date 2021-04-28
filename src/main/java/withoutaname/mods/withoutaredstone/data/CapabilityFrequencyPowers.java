@@ -1,5 +1,9 @@
 package withoutaname.mods.withoutaredstone.data;
 
+import java.util.HashMap;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
@@ -12,22 +16,19 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.HashMap;
-
 public class CapabilityFrequencyPowers {
-
+	
 	@CapabilityInject(IFrequencyPowers.class)
 	public static Capability<IFrequencyPowers> FREQUENCY_POWERS_CAPABILITY = null;
-
+	
 	public static void register() {
 		CapabilityManager.INSTANCE.register(IFrequencyPowers.class, new Storage(), DefaultFrequencyPowers::new);
-
+		
 		MinecraftForge.EVENT_BUS.addGenericListener(World.class, FrequencyPowersEventHandler::onAttachCapabilitiesEvent);
 	}
-
+	
 	private static class Storage implements Capability.IStorage<IFrequencyPowers> {
+		
 		@Nullable
 		@Override
 		public INBT writeNBT(Capability<IFrequencyPowers> capability, @Nonnull IFrequencyPowers instance, Direction side) {
@@ -40,7 +41,7 @@ public class CapabilityFrequencyPowers {
 			});
 			return frequencyPowersNBT;
 		}
-
+		
 		@Nonnull
 		private ListNBT getValue(@Nonnull HashMap<BlockPos, Integer> posPowers) {
 			ListNBT value = new ListNBT();
@@ -52,7 +53,7 @@ public class CapabilityFrequencyPowers {
 			});
 			return value;
 		}
-
+		
 		@Override
 		public void readNBT(Capability<IFrequencyPowers> capability, IFrequencyPowers instance, Direction side, INBT inbt) {
 			HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers = new HashMap<>();
@@ -66,7 +67,7 @@ public class CapabilityFrequencyPowers {
 			}
 			instance.setFrequencyPowers(frequencyPowers);
 		}
-
+		
 		@Nonnull
 		private HashMap<BlockPos, Integer> getMap(INBT inbt) {
 			HashMap<BlockPos, Integer> posPowers = new HashMap<>();
@@ -83,5 +84,7 @@ public class CapabilityFrequencyPowers {
 			}
 			return posPowers;
 		}
+		
 	}
+	
 }

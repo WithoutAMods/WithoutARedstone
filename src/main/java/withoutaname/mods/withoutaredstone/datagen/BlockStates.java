@@ -6,16 +6,17 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+
 import withoutaname.mods.withoutaredstone.WithoutARedstone;
 import withoutaname.mods.withoutaredstone.blocks.WirelessLinkBlock;
 import withoutaname.mods.withoutaredstone.setup.Registration;
 
 public class BlockStates extends BlockStateProvider {
-
+	
 	public BlockStates(DataGenerator gen, ExistingFileHelper exFileHelper) {
 		super(gen, WithoutARedstone.MODID, exFileHelper);
 	}
-
+	
 	@Override
 	protected void registerStatesAndModels() {
 		ModelFile wirelessLinkTemplateModel = models().withExistingParent("block/wireless_link", mcLoc("block/block"))
@@ -58,7 +59,7 @@ public class BlockStates extends BlockStateProvider {
 				.parent(wirelessLinkTemplateModel)
 				.texture("top", modLoc("block/wireless_link_on"))
 				.texture("torch", mcLoc("block/redstone_torch"));
-
+		
 		getVariantBuilder(Registration.WIRELESS_LINK_BLOCK.get()).forAllStates(blockState -> {
 			if (blockState.getValue(WirelessLinkBlock.RECEIVER)) {
 				return ConfiguredModel.builder()
@@ -70,8 +71,8 @@ public class BlockStates extends BlockStateProvider {
 						.build();
 			}
 		});
-
+		
 		simpleBlockItem(Registration.WIRELESS_LINK_BLOCK.get(), wirelessLinkReceiverOff);
 	}
-
+	
 }

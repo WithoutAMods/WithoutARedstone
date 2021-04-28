@@ -1,5 +1,9 @@
 package withoutaname.mods.withoutaredstone.blocks;
 
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -8,32 +12,29 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+
 import withoutaname.mods.withoutaredstone.data.CapabilityFrequencyPowers;
 import withoutaname.mods.withoutaredstone.setup.Registration;
 
-import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class WirelessLinkTile extends TileEntity {
-
+	
 	private int frequency = 0;
 	private boolean receiver = false;
-
+	
 	public WirelessLinkTile() {
 		super(Registration.WIRELESS_LINK_TILE.get());
 	}
-
+	
 	public WirelessLinkTile(boolean receiver) {
 		this();
 		this.receiver = receiver;
 		setChanged();
 	}
-
+	
 	public int getFrequency() {
 		return frequency;
 	}
-
+	
 	public void setFrequency(int frequency) {
 		assert level != null;
 		if (!level.isClientSide) {
@@ -61,11 +62,11 @@ public class WirelessLinkTile extends TileEntity {
 			setChanged();
 		}
 	}
-
+	
 	public boolean isReceiver() {
 		return receiver;
 	}
-
+	
 	public void setReceiver(boolean receiver) {
 		assert level != null;
 		if (!level.isClientSide && level.hasChunkAt(worldPosition)) {
@@ -90,7 +91,7 @@ public class WirelessLinkTile extends TileEntity {
 			setChanged();
 		}
 	}
-
+	
 	public void updateReceiver() {
 		if (level != null && !level.isClientSide) {
 			AtomicInteger power = new AtomicInteger();
@@ -99,14 +100,14 @@ public class WirelessLinkTile extends TileEntity {
 			level.setBlockAndUpdate(worldPosition, getBlockState().setValue(WirelessLinkBlock.POWER, power.get()));
 		}
 	}
-
+	
 	public void updateSender() {
 		if (level != null && !level.isClientSide) {
 			level.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
 					.ifPresent(iFrequencyPowers -> iFrequencyPowers.setPower(frequency, worldPosition, getPower()));
 		}
 	}
-
+	
 	private int getPower() {
 		int power = Math.max(Math.max(
 				Math.max(getPowerOnSide(Direction.NORTH), getPowerOnSide(Direction.SOUTH)),
@@ -117,7 +118,7 @@ public class WirelessLinkTile extends TileEntity {
 		}
 		return power;
 	}
-
+	
 	private int getPowerOnSide(Direction side) {
 		assert level != null;
 		BlockPos blockPos = worldPosition.relative(side);
@@ -133,7 +134,7 @@ public class WirelessLinkTile extends TileEntity {
 			return 0;
 		}
 	}
-
+	
 	@Override
 	public void onLoad() {
 		assert level != null;
@@ -145,7 +146,7 @@ public class WirelessLinkTile extends TileEntity {
 			level.getBlockTicks().scheduleTick(worldPosition, Registration.WIRELESS_LINK_BLOCK.get(), 0);
 		}
 	}
-
+	
 	@Override
 	public void onChunkUnloaded() {
 		assert level != null;
@@ -154,7 +155,7 @@ public class WirelessLinkTile extends TileEntity {
 					.ifPresent(iFrequencyPowers -> iFrequencyPowers.removeReceiver(frequency, this));
 		}
 	}
-
+	
 	public void blockDestroyed() {
 		assert level != null;
 		if (!level.isClientSide) {
@@ -173,14 +174,14 @@ public class WirelessLinkTile extends TileEntity {
 			}
 		}
 	}
-
+	
 	@Override
 	public void load(@Nonnull BlockState state, @Nonnull CompoundNBT nbt) {
 		super.load(state, nbt);
 		frequency = nbt.getInt("frequency");
 		receiver = nbt.getBoolean("receiver");
 	}
-
+	
 	@Nonnull
 	@Override
 	public CompoundNBT save(@Nonnull CompoundNBT compound) {
@@ -189,4 +190,5 @@ public class WirelessLinkTile extends TileEntity {
 		nbt.putBoolean("receiver", receiver);
 		return nbt;
 	}
+	
 }
