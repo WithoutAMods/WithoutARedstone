@@ -33,6 +33,7 @@ displayURL="https://github.com/WithoutAMods/WithoutARedstone" #optional
 authors="WithoutAName" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
+Wireless Redstone
 '''
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
