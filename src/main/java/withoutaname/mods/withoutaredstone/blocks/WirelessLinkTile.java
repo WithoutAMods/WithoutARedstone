@@ -18,7 +18,7 @@ import withoutaname.mods.withoutaredstone.setup.Registration;
 
 public class WirelessLinkTile extends TileEntity {
 	
-	private int frequency = 0;
+	private long frequency = 0;
 	private boolean receiver = false;
 	
 	public WirelessLinkTile() {
@@ -31,14 +31,14 @@ public class WirelessLinkTile extends TileEntity {
 		setChanged();
 	}
 	
-	public int getFrequency() {
+	public long getFrequency() {
 		return frequency;
 	}
 	
-	public void setFrequency(int frequency) {
+	public void setFrequency(long frequency) {
 		assert level != null;
 		if (!level.isClientSide) {
-			int oldFrequency = this.frequency;
+			long oldFrequency = this.frequency;
 			this.frequency = frequency;
 			if (receiver) {
 				if (level.hasChunkAt(worldPosition)) {
@@ -51,7 +51,7 @@ public class WirelessLinkTile extends TileEntity {
 			} else {
 				level.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
 						.ifPresent(iFrequencyPowers -> {
-							HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers = iFrequencyPowers.getFrequencyPowers();
+							HashMap<Long, HashMap<BlockPos, Integer>> frequencyPowers = iFrequencyPowers.getFrequencyPowers();
 							if (frequencyPowers.containsKey(oldFrequency)) {
 								frequencyPowers.get(oldFrequency).remove(worldPosition);
 								iFrequencyPowers.notifyReceivers(oldFrequency);
@@ -75,7 +75,7 @@ public class WirelessLinkTile extends TileEntity {
 			if (receiver) {
 				level.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
 						.ifPresent(iFrequencyPowers -> {
-							HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers = iFrequencyPowers.getFrequencyPowers();
+							HashMap<Long, HashMap<BlockPos, Integer>> frequencyPowers = iFrequencyPowers.getFrequencyPowers();
 							if (frequencyPowers.containsKey(frequency)) {
 								frequencyPowers.get(frequency).remove(worldPosition);
 							}
@@ -165,7 +165,7 @@ public class WirelessLinkTile extends TileEntity {
 			} else {
 				level.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
 						.ifPresent(iFrequencyPowers -> {
-							HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers = iFrequencyPowers.getFrequencyPowers();
+							HashMap<Long, HashMap<BlockPos, Integer>> frequencyPowers = iFrequencyPowers.getFrequencyPowers();
 							if (frequencyPowers.containsKey(frequency)) {
 								frequencyPowers.get(frequency).remove(worldPosition);
 								iFrequencyPowers.notifyReceivers(frequency);
@@ -178,7 +178,7 @@ public class WirelessLinkTile extends TileEntity {
 	@Override
 	public void load(@Nonnull BlockState state, @Nonnull CompoundNBT nbt) {
 		super.load(state, nbt);
-		frequency = nbt.getInt("frequency");
+		frequency = nbt.getLong("frequency");
 		receiver = nbt.getBoolean("receiver");
 	}
 	
@@ -186,7 +186,7 @@ public class WirelessLinkTile extends TileEntity {
 	@Override
 	public CompoundNBT save(@Nonnull CompoundNBT compound) {
 		CompoundNBT nbt = super.save(compound);
-		nbt.putInt("frequency", frequency);
+		nbt.putLong("frequency", frequency);
 		nbt.putBoolean("receiver", receiver);
 		return nbt;
 	}

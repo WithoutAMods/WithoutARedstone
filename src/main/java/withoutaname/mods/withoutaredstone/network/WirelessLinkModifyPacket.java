@@ -16,7 +16,7 @@ public class WirelessLinkModifyPacket {
 	
 	private static final HashMap<ServerPlayerEntity, WirelessLinkTile> openGUIs = new HashMap<>();
 	
-	private final int frequency;
+	private final long frequency;
 	private final boolean receiver;
 	
 	public WirelessLinkModifyPacket(ServerPlayerEntity player, WirelessLinkTile tile) {
@@ -25,17 +25,17 @@ public class WirelessLinkModifyPacket {
 		receiver = tile.isReceiver();
 	}
 	
-	public WirelessLinkModifyPacket(int frequency, boolean receiver) {
+	public WirelessLinkModifyPacket(long frequency, boolean receiver) {
 		this.frequency = frequency;
 		this.receiver = receiver;
 	}
 	
 	public WirelessLinkModifyPacket(@Nonnull PacketBuffer packetBuffer) {
-		this(packetBuffer.readInt(), packetBuffer.readBoolean());
+		this(packetBuffer.readLong(), packetBuffer.readBoolean());
 	}
 	
 	public void toBytes(@Nonnull PacketBuffer packetBuffer) {
-		packetBuffer.writeInt(frequency);
+		packetBuffer.writeLong(frequency);
 		packetBuffer.writeBoolean(receiver);
 	}
 	

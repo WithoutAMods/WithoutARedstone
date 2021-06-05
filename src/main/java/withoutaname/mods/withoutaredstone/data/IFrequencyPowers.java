@@ -8,20 +8,20 @@ import withoutaname.mods.withoutaredstone.blocks.WirelessLinkTile;
 
 public interface IFrequencyPowers {
 	
-	HashMap<Integer, HashMap<BlockPos, Integer>> getFrequencyPowers();
+	HashMap<Long, HashMap<BlockPos, Integer>> getFrequencyPowers();
 	
-	void setFrequencyPowers(HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers);
+	void setFrequencyPowers(HashMap<Long, HashMap<BlockPos, Integer>> frequencyPowers);
 	
-	int getPower(int frequency);
+	int getPower(long frequency);
 	
-	void removePower(int frequency, BlockPos pos);
+	void removePower(long frequency, BlockPos pos);
 	
-	void setPower(int frequency, BlockPos pos, int power);
+	void setPower(long frequency, BlockPos pos, int power);
 	
-	void notifyReceivers(int frequency);
+	void notifyReceivers(long frequency);
 	
-	void addReceiver(int frequency, WirelessLinkTile tile);
+	void addReceiver(long frequency, WirelessLinkTile tile);
 	
-	void removeReceiver(int frequency, WirelessLinkTile tile);
+	void removeReceiver(long frequency, WirelessLinkTile tile);
 	
 }

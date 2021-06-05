@@ -27,20 +27,20 @@ public class WirelessLinkModifyScreen extends Screen {
 	
 	private int guiLeft;
 	private int guiTop;
-	private int frequency;
+	private long frequency;
 	private boolean receiver;
 	
 	private Button receiverButton;
 	private Button senderButton;
 	private TextFieldWidget frequencyTextField;
 	
-	public WirelessLinkModifyScreen(int frequency, boolean receiver) {
+	public WirelessLinkModifyScreen(long frequency, boolean receiver) {
 		super(new TranslationTextComponent("screen.withoutaredstone.wireless_link_modify"));
 		this.frequency = frequency;
 		this.receiver = receiver;
 	}
 	
-	public static void open(int frequency, boolean receiver) {
+	public static void open(long frequency, boolean receiver) {
 		Minecraft.getInstance().setScreen(new WirelessLinkModifyScreen(frequency, receiver));
 	}
 	
@@ -64,11 +64,19 @@ public class WirelessLinkModifyScreen extends Screen {
 			if ("".equals(s) || "-".equals(s)) {
 				frequency = 0;
 			} else if (numeric.matcher(s).matches()) {
-				frequency = Integer.parseInt(s);
+				try {
+					frequency = Long.parseLong(s);
+				} catch (NumberFormatException e) {
+					resetFrequencyTextField();
+				}
 			} else {
-				frequencyTextField.setValue(String.valueOf(frequency));
+				resetFrequencyTextField();
 			}
 		});
+		resetFrequencyTextField();
+	}
+	
+	private void resetFrequencyTextField() {
 		frequencyTextField.setValue(String.valueOf(frequency));
 	}
 	

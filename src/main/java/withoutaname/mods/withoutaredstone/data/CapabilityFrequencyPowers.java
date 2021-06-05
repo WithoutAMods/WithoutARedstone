@@ -35,7 +35,7 @@ public class CapabilityFrequencyPowers {
 			ListNBT frequencyPowersNBT = new ListNBT();
 			instance.getFrequencyPowers().forEach((frequency, posPowers) -> {
 				CompoundNBT nbt = new CompoundNBT();
-				nbt.putInt("key", frequency);
+				nbt.putLong("key", frequency);
 				nbt.put("value", getValue(posPowers));
 				frequencyPowersNBT.add(nbt);
 			});
@@ -56,12 +56,12 @@ public class CapabilityFrequencyPowers {
 		
 		@Override
 		public void readNBT(Capability<IFrequencyPowers> capability, IFrequencyPowers instance, Direction side, INBT inbt) {
-			HashMap<Integer, HashMap<BlockPos, Integer>> frequencyPowers = new HashMap<>();
+			HashMap<Long, HashMap<BlockPos, Integer>> frequencyPowers = new HashMap<>();
 			if (inbt instanceof ListNBT) {
 				for (INBT nbt : (ListNBT) inbt) {
 					if (nbt instanceof CompoundNBT) {
 						CompoundNBT compoundNBT = (CompoundNBT) nbt;
-						frequencyPowers.put(compoundNBT.getInt("key"), getMap(compoundNBT.get("value")));
+						frequencyPowers.put(compoundNBT.getLong("key"), getMap(compoundNBT.get("value")));
 					}
 				}
 			}
