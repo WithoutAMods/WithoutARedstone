@@ -26,7 +26,7 @@ repositories {
     }
 }
 
-version = "${withoutaredstone_version}"
+version = "${minecraft_version}-${withoutaredstone_version}"
 group = 'withoutaname.mods.withoutaredstone' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'WithoutARedstone'
 
