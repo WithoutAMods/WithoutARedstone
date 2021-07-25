@@ -2,9 +2,9 @@ package withoutaname.mods.withoutaredstone.datagen;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.LanguageProvider;
 
 import withoutaname.mods.withoutaredstone.WithoutARedstone;

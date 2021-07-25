@@ -1,10 +1,9 @@
 package withoutaname.mods.withoutaredstone.data;
 
+import net.minecraft.core.BlockPos;
+import withoutaname.mods.withoutaredstone.blocks.WirelessLinkEntity;
+
 import java.util.HashMap;
-
-import net.minecraft.util.math.BlockPos;
-
-import withoutaname.mods.withoutaredstone.blocks.WirelessLinkTile;
 
 public interface IFrequencyPowers {
 	
@@ -20,8 +19,8 @@ public interface IFrequencyPowers {
 	
 	void notifyReceivers(long frequency);
 	
-	void addReceiver(long frequency, WirelessLinkTile tile);
+	void addReceiver(long frequency, WirelessLinkEntity tile);
 	
-	void removeReceiver(long frequency, WirelessLinkTile tile);
+	void removeReceiver(long frequency, WirelessLinkEntity tile);
 	
 }

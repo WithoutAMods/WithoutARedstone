@@ -2,9 +2,9 @@ package withoutaname.mods.withoutaredstone.setup;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import withoutaname.mods.withoutaredstone.WithoutARedstone;
@@ -13,7 +13,7 @@ import withoutaname.mods.withoutaredstone.network.Networking;
 
 public class ModSetup {
 	
-	public static final ItemGroup defaultItemGroup = new ItemGroup(WithoutARedstone.MODID) {
+	public static final CreativeModeTab DEFAULT_CREATIVE_MODE_TAB = new CreativeModeTab(WithoutARedstone.MODID) {
 		
 		@Nonnull
 		@Override
@@ -22,7 +22,7 @@ public class ModSetup {
 		}
 		
 	};
-	public static final Item.Properties defaultItemProperties = new Item.Properties().tab(defaultItemGroup);
+	public static final Item.Properties DEFAULT_ITEM_PROPERTIES = new Item.Properties().tab(DEFAULT_CREATIVE_MODE_TAB);
 	
 	public static void init(FMLCommonSetupEvent event) {
 		Networking.registerMessages();

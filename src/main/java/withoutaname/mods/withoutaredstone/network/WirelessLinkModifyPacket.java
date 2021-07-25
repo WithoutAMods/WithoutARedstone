@@ -4,22 +4,21 @@ import java.util.HashMap;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
-
-import withoutaname.mods.withoutaredstone.blocks.WirelessLinkTile;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import withoutaname.mods.withoutaredstone.blocks.WirelessLinkEntity;
 import withoutaname.mods.withoutaredstone.gui.WirelessLinkModifyScreen;
 
 public class WirelessLinkModifyPacket {
 	
-	private static final HashMap<ServerPlayerEntity, WirelessLinkTile> openGUIs = new HashMap<>();
+	private static final HashMap<ServerPlayer, WirelessLinkEntity> openGUIs = new HashMap<>();
 	
 	private final long frequency;
 	private final boolean receiver;
 	
-	public WirelessLinkModifyPacket(ServerPlayerEntity player, WirelessLinkTile tile) {
+	public WirelessLinkModifyPacket(ServerPlayer player, WirelessLinkEntity tile) {
 		openGUIs.put(player, tile);
 		frequency = tile.getFrequency();
 		receiver = tile.isReceiver();
@@ -30,11 +29,11 @@ public class WirelessLinkModifyPacket {
 		this.receiver = receiver;
 	}
 	
-	public WirelessLinkModifyPacket(@Nonnull PacketBuffer packetBuffer) {
+	public WirelessLinkModifyPacket(@Nonnull FriendlyByteBuf packetBuffer) {
 		this(packetBuffer.readLong(), packetBuffer.readBoolean());
 	}
 	
-	public void toBytes(@Nonnull PacketBuffer packetBuffer) {
+	public void toBytes(@Nonnull FriendlyByteBuf packetBuffer) {
 		packetBuffer.writeLong(frequency);
 		packetBuffer.writeBoolean(receiver);
 	}
@@ -44,8 +43,8 @@ public class WirelessLinkModifyPacket {
 			if (ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
 				WirelessLinkModifyScreen.open(frequency, receiver);
 			} else {
-				ServerPlayerEntity sender = ctx.get().getSender();
-				WirelessLinkTile tile = openGUIs.remove(sender);
+				ServerPlayer sender = ctx.get().getSender();
+				WirelessLinkEntity tile = openGUIs.remove(sender);
 				tile.setFrequency(frequency);
 				tile.setReceiver(receiver);
 			}

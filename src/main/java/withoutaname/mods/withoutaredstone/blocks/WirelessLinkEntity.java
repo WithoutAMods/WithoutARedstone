@@ -4,30 +4,25 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.Nonnull;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RedstoneWireBlock;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import withoutaname.mods.withoutaredstone.data.CapabilityFrequencyPowers;
 import withoutaname.mods.withoutaredstone.setup.Registration;
 
-public class WirelessLinkTile extends TileEntity {
+public class WirelessLinkEntity extends BlockEntity {
 	
 	private long frequency = 0;
 	private boolean receiver = false;
 	
-	public WirelessLinkTile() {
-		super(Registration.WIRELESS_LINK_TILE.get());
-	}
-	
-	public WirelessLinkTile(boolean receiver) {
-		this();
-		this.receiver = receiver;
+	public WirelessLinkEntity(BlockPos pos, BlockState state) {
+		super(Registration.WIRELESS_LINK_TILE.get(), pos, state);
+		this.receiver = state.getValue(WirelessLinkBlock.RECEIVER);
 		setChanged();
 	}
 	
@@ -128,7 +123,7 @@ public class WirelessLinkTile extends TileEntity {
 			if (block == Blocks.REDSTONE_BLOCK) {
 				return 15;
 			} else {
-				return block == Blocks.REDSTONE_WIRE ? blockstate.getValue(RedstoneWireBlock.POWER) : level.getDirectSignal(blockPos, side);
+				return block == Blocks.REDSTONE_WIRE ? blockstate.getValue(RedStoneWireBlock.POWER) : level.getDirectSignal(blockPos, side);
 			}
 		} else {
 			return 0;
@@ -176,19 +171,19 @@ public class WirelessLinkTile extends TileEntity {
 	}
 	
 	@Override
-	public void load(@Nonnull BlockState state, @Nonnull CompoundNBT nbt) {
-		super.load(state, nbt);
-		frequency = nbt.getLong("frequency");
-		receiver = nbt.getBoolean("receiver");
+	public void load(@Nonnull CompoundTag tag) {
+		super.load(tag);
+		frequency = tag.getLong("frequency");
+		receiver = tag.getBoolean("receiver");
 	}
 	
 	@Nonnull
 	@Override
-	public CompoundNBT save(@Nonnull CompoundNBT compound) {
-		CompoundNBT nbt = super.save(compound);
-		nbt.putLong("frequency", frequency);
-		nbt.putBoolean("receiver", receiver);
-		return nbt;
+	public CompoundTag save(@Nonnull CompoundTag compound) {
+		CompoundTag tag = super.save(compound);
+		tag.putLong("frequency", frequency);
+		tag.putBoolean("receiver", receiver);
+		return tag;
 	}
 	
 }

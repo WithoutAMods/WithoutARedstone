@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
-import withoutaname.mods.withoutaredstone.blocks.WirelessLinkTile;
+import withoutaname.mods.withoutaredstone.blocks.WirelessLinkEntity;
 
 public class DefaultFrequencyPowers implements IFrequencyPowers {
 	
-	private final HashMap<Long, List<WirelessLinkTile>> receivers = new HashMap<>();
+	private final HashMap<Long, List<WirelessLinkEntity>> receivers = new HashMap<>();
 	private HashMap<Long, HashMap<BlockPos, Integer>> frequencyPowers = new HashMap<>();
 	
 	@Override
@@ -58,25 +58,25 @@ public class DefaultFrequencyPowers implements IFrequencyPowers {
 	@Override
 	public void notifyReceivers(long frequency) {
 		if (receivers.containsKey(frequency)) {
-			for (WirelessLinkTile tile : receivers.get(frequency)) {
+			for (WirelessLinkEntity tile : receivers.get(frequency)) {
 				tile.updateReceiver();
 			}
 		}
 	}
 	
 	@Override
-	public void addReceiver(long frequency, WirelessLinkTile tile) {
+	public void addReceiver(long frequency, WirelessLinkEntity tile) {
 		if (!receivers.containsKey(frequency)) {
 			receivers.put(frequency, new ArrayList<>());
 		}
-		List<WirelessLinkTile> wirelessLinkTiles = receivers.get(frequency);
-		if (!wirelessLinkTiles.contains(tile)) {
-			wirelessLinkTiles.add(tile);
+		List<WirelessLinkEntity> wirelessLinkEntities = receivers.get(frequency);
+		if (!wirelessLinkEntities.contains(tile)) {
+			wirelessLinkEntities.add(tile);
 		}
 	}
 	
 	@Override
-	public void removeReceiver(long frequency, WirelessLinkTile tile) {
+	public void removeReceiver(long frequency, WirelessLinkEntity tile) {
 		if (receivers.containsKey(frequency)) {
 			receivers.get(frequency).remove(tile);
 		}
