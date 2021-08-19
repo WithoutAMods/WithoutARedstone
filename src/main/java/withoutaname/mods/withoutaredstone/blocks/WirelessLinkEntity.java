@@ -1,9 +1,5 @@
 package withoutaname.mods.withoutaredstone.blocks;
 
-import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-import javax.annotation.Nonnull;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -14,6 +10,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import withoutaname.mods.withoutaredstone.data.CapabilityFrequencyPowers;
 import withoutaname.mods.withoutaredstone.setup.Registration;
+
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class WirelessLinkEntity extends BlockEntity {
 	
@@ -131,7 +131,8 @@ public class WirelessLinkEntity extends BlockEntity {
 	}
 	
 	@Override
-	public void onLoad() {
+	public void clearRemoved() {
+		super.clearRemoved();
 		assert level != null;
 		if (!level.isClientSide) {
 			if (receiver) {
@@ -143,12 +144,13 @@ public class WirelessLinkEntity extends BlockEntity {
 	}
 	
 	@Override
-	public void onChunkUnloaded() {
+	public void setRemoved() {
 		assert level != null;
 		if (!level.isClientSide) {
 			level.getCapability(CapabilityFrequencyPowers.FREQUENCY_POWERS_CAPABILITY)
 					.ifPresent(iFrequencyPowers -> iFrequencyPowers.removeReceiver(frequency, this));
 		}
+		super.setRemoved();
 	}
 	
 	public void blockDestroyed() {

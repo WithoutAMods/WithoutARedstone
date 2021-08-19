@@ -1,9 +1,5 @@
 package withoutaname.mods.withoutaredstone.blocks;
 
-import java.util.Random;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -13,7 +9,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -30,6 +25,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import withoutaname.mods.withoutaredstone.network.Networking;
 import withoutaname.mods.withoutaredstone.network.WirelessLinkModifyPacket;
+
+import javax.annotation.Nonnull;
+import java.util.Random;
 
 public class WirelessLinkBlock extends BaseEntityBlock {
 	
@@ -122,12 +120,12 @@ public class WirelessLinkBlock extends BaseEntityBlock {
 	
 	@Override
 	public int getSignal(@Nonnull BlockState blockState, @Nonnull BlockGetter blockAccess, @Nonnull BlockPos pos, @Nonnull Direction side) {
-		return isSignalSource(blockState) ? blockState.getValue(POWER) : 0;
+		return blockState.getValue(RECEIVER) ? blockState.getValue(POWER) : 0;
 	}
 	
 	@Override
 	public int getDirectSignal(@Nonnull BlockState blockState, @Nonnull BlockGetter blockAccess, @Nonnull BlockPos pos, @Nonnull Direction side) {
-		return isSignalSource(blockState) ? blockState.getValue(POWER) : 0;
+		return blockState.getValue(RECEIVER) ? blockState.getValue(POWER) : 0;
 	}
 	
 }
