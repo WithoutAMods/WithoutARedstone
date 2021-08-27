@@ -14,6 +14,9 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 repositories {
+    maven { // CBMultipart, CodeChickenLib, ProjectRed
+        url "https://chickenbones.net/maven/"
+    }
     maven { // JEI
         url "http://dvs1.progwml6.com/files/maven"
     }
@@ -81,15 +84,24 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    implementation fg.deobf("codechicken:CBMultipart:${cbmultipart_version}:universal")
+
+    implementation fg.deobf("codechicken:CodeChickenLib:${codechickenlib_version}:universal")
+
     compileOnly fg.deobf("mezz.jei:jei-${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${jei_version}")
 
-    compile fg.deobf("mcjty.theoneprobe:TheOneProbe-${top_version}")
+    implementation fg.deobf("mrtjp:ProjectRed:${projectred_version}:core")
+    implementation fg.deobf("mrtjp:ProjectRed:${projectred_version}:transmission")
+
+    implementation fg.deobf("net.minecraftforge:Scorge:${scorge_version}")
+
+    implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-${top_version}")
 
     if (findProject(':WithoutALib') != null) {
-        compile project(':WithoutALib')
+        implementation project(':WithoutALib')
     } else {
-        compile fg.deobf("withoutaname.mods.withoutalib:WithoutALib:${withoutalib_version}")
+        implementation fg.deobf("withoutaname.mods.withoutalib:WithoutALib:${withoutalib_version}")
     }
 
     // You may put jars on which you depend on in ./libs or you may define them like so..
