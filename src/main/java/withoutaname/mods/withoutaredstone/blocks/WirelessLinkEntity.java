@@ -1,11 +1,7 @@
 package withoutaname.mods.withoutaredstone.blocks;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import withoutaname.mods.withoutaredstone.data.CapabilityFrequencyPowers;
@@ -104,30 +100,10 @@ public class WirelessLinkEntity extends BlockEntity {
 	}
 	
 	private int getPower() {
-		int power = Math.max(Math.max(
-				Math.max(getPowerOnSide(Direction.NORTH), getPowerOnSide(Direction.SOUTH)),
-				Math.max(getPowerOnSide(Direction.EAST), getPowerOnSide(Direction.WEST))),
-				Math.max(getPowerOnSide(Direction.UP), getPowerOnSide(Direction.DOWN)));
-		if (level != null) {
-			level.setBlockAndUpdate(worldPosition, getBlockState().setValue(WirelessLinkBlock.POWER, power));
-		}
-		return power;
-	}
-	
-	private int getPowerOnSide(Direction side) {
 		assert level != null;
-		BlockPos blockPos = worldPosition.relative(side);
-		BlockState blockstate = level.getBlockState(blockPos);
-		Block block = blockstate.getBlock();
-		if (blockstate.isSignalSource()) {
-			if (block == Blocks.REDSTONE_BLOCK) {
-				return 15;
-			} else {
-				return block == Blocks.REDSTONE_WIRE ? blockstate.getValue(RedStoneWireBlock.POWER) : level.getDirectSignal(blockPos, side);
-			}
-		} else {
-			return 0;
-		}
+		int power = level.getBestNeighborSignal(worldPosition);
+		level.setBlockAndUpdate(worldPosition, getBlockState().setValue(WirelessLinkBlock.POWER, power));
+		return power;
 	}
 	
 	@Override
